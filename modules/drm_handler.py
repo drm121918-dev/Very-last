@@ -294,12 +294,17 @@ async def drm_handler(bot: Client, m: Message):
             elif "https://cpvod.testbook.com/" in url or "classplusapp.com/drm/" in url:
                 url = url.replace("https://cpvod.testbook.com/","https://media-cdn.classplusapp.com/drm/")
                 url = f"https://head-micheline-botupdatevip-f1804c58.koyeb.app/get_keys?url={url}@botupdatevip4u&user_id={user_id}"
-                mpd, keys = helper.get_mps_and_keys2(url)
-                url = mpd
-                keys_string = " ".join([f"--key {key}" for key in keys])
+                def get_mps_and_keys2(api_url):
+                response = requests.get(api_url)
+                response_json = response.json()
+                mpd = response_json.get('mpd_url')
+                keys = response_json.get('keys')
+                return mpd, keys
+                
+    
 
             #elif "classplusapp" in url:
-                #signed_api = f"https://covercel.vercel.app/extract_keys?url={url}@bots_updatee&user_id={user_id}"
+                #signed_api = f"https://head-micheline-botupdatevip-f1804c58.koyeb.app/get_keys?url={url}@botupdatevip4u&user_id={user_id}"
                 #response = requests.get(signed_api, timeout=20)
                 #url = response.text.strip()
                 #url = response.json()['url']  
@@ -313,9 +318,14 @@ async def drm_handler(bot: Client, m: Message):
             elif 'media-cdn.classplusapp.com' in url or "media-cdn.classplusapp.com" in url and ("cc/" in url or "lc/" in url or "tencent/" in url or "drm/" in url) or'media-cdn-alisg.classplusapp.com' in url or 'media-cdn-a.classplusapp.com' in url : 
                 url = url.replace("https://cpvod.testbook.com/","https://media-cdn.classplusapp.com/drm/")
                 url = f"https://head-micheline-botupdatevip-f1804c58.koyeb.app/get_keys?url={url}@botupdatevip4u&user_id={user_id}"
-                mpd, keys = helper.get_mps_and_keys2(url)
-                url = mpd
-                keys_string = " ".join([f"--key {key}" for key in keys])
+                def get_mps_and_keys2(api_url):
+                response = requests.get(api_url)
+                response_json = response.json()
+                mpd = response_json.get('mpd_url')
+                keys = response_json.get('keys')
+                return mpd, keys
+                
+            
 
             if "edge.api.brightcove.com" in url:
                 bcov = f'bcov_auth={cwtoken}'
